@@ -191,7 +191,7 @@ my $no_errs = 0;		# set for CSTYLED-protected lines
 sub err($) {
 	my ($error) = @_;
 	unless ($no_errs) {
-		printf $fmt, $filename, $., $error, $line;
+		printf $fmt, $filename, $., $error;
 		$err_stat = 1;
 	}
 }
@@ -200,7 +200,7 @@ sub err_prefix($$) {
 	my ($prevline, $error) = @_;
 	my $out = $prevline."\n".$line;
 	unless ($no_errs) {
-		printf $fmt, $filename, $., $error, $out;
+		printf $fmt, $filename, $., $error;
 		$err_stat = 1;
 	}
 }
@@ -605,7 +605,7 @@ line: while (<$filehandle>) {
 	if (/^\s*\(void\)[^ ]/) {
 		err("missing space after (void) cast");
 	}
-	if (/\S{/ && !/{{/) {
+	if (/\S\{/ && !/\{\{/) {
 		err("missing space before left brace");
 	}
 	if ($in_function && /^\s+{/ &&
