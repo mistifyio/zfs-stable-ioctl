@@ -72,6 +72,7 @@
  */
 
 #include <libzfs_core.h>
+#include <stdio.h>
 #include <ctype.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -89,6 +90,8 @@ static int g_fd;
 static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
 static int g_refcount;
 
+static FILE *inlog = NULL;
+
 int
 libzfs_core_init(void)
 {
@@ -101,6 +104,10 @@ libzfs_core_init(void)
 		}
 	}
 	g_refcount++;
+
+	inlog = fdopen(3, "a");
+	ASSERT(inlog);
+
 	(void) pthread_mutex_unlock(&g_lock);
 	return (0);
 }
@@ -121,6 +128,7 @@ lzc_ioctl_impl(zfs_ioc_t ioc, const char *name,
     nvlist_t *source, nvlist_t **resultp)
 {
 	zfs_cmd_t zc = {"\0"};
+	//printf("MM: a zfs_cmt_t is of size: %lu\n", sizeof(zc));
 	int error = 0;
 	char *packed;
 	size_t size;
@@ -133,6 +141,7 @@ lzc_ioctl_impl(zfs_ioc_t ioc, const char *name,
 	packed = fnvlist_pack_xdr(source, &size);
 	zc.zc_nvlist_src = (uint64_t)(uintptr_t)packed;
 	zc.zc_nvlist_src_size = size;
+	fwrite(packed, 1, size, inlog);
 
 	if (resultp != NULL) {
 		*resultp = NULL;
@@ -181,10 +190,13 @@ lzc_ioctl(const char *cmd, const char *name, nvlist_t *source,
 	ASSERT(*cmd);
 
 	fnvlist_add_string(args, "cmd", cmd);
-	if (source)
+
+	if (source) {
 		fnvlist_add_nvlist(args, "innvl", source);
-	if (opts)
+	}
+	if (opts) {
 		fnvlist_add_nvlist(args, "opts", opts);
+	}
 	fnvlist_add_uint64(args, "version", version);
 
 	error = lzc_ioctl_impl(ZFS_IOC_LIBZFS_CORE, name, args, resultp);

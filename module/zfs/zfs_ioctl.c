@@ -6567,6 +6567,7 @@ zfs_ioc_stable(zfs_cmd_t *zc)
 
 out:
 	nvlist_free(mnvl);
+	printk("%s: error: %d\n", __func__, error);
 	return (error);
 }
 
@@ -7109,6 +7110,7 @@ zfsdev_ioctl(struct file *filp, unsigned cmd, unsigned long arg)
 		return (-SET_ERROR(EINVAL));
 
 	zc = kmem_zalloc(sizeof (zfs_cmd_t), KM_SLEEP);
+	printk("MM: a zfs_cmd_t is of size: %lu\n", sizeof(zfs_cmd_t));
 
 	error = ddi_copyin((void *)arg, zc, sizeof (zfs_cmd_t), flag);
 	if (error != 0) {
