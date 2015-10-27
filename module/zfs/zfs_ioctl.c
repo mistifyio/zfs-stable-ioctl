@@ -6505,67 +6505,64 @@ zfs_ioc_stable(zfs_cmd_t *zc)
 	zc->zc_name[sizeof (zc->zc_name) - 1] = '\0';
 
 	for (i = 0; i < zfs_stable_ioc_vec_count; i++) {
-		if (strcmp(zfs_stable_ioc_vec[i].zvec_name, cmd) == 0) {
-			const zfs_stable_ioc_vec_t *vec =
-			    &zfs_stable_ioc_vec[i];
-			nvlist_t *lognv = NULL;
-			spa_t *spa;
-			int puterror = 0;
+		const zfs_stable_ioc_vec_t *vec = NULL;
+		nvlist_t *lognv = NULL;
+		spa_t *spa = NULL;
+		int puterror = 0;
 
-			error = zfs_namecheck(name, vec->zvec_namecheck,
-			    vec->zvec_pool_check);
-
-			if (error == 0 && !(zc->zc_iflags & FKIOCTL))
-				error = vec->zvec_secpolicy(zc,
-				    innvl, opts, CRED());
-
-			if (error)
-				return (error);
-
-			ASSERT(vec->zvec_func);
-			VERIFY0(nvlist_alloc(&outnvl, NV_UNIQUE_NAME,
-			    KM_PUSHPAGE));
-
-			/* XXX: Do we want to log the mnvl as the input nvl? */
-			if (vec->zvec_allow_log) {
-				lognv = fnvlist_alloc();
-				fnvlist_add_string(lognv, ZPOOL_HIST_IOCTL,
-				    "stable");
-				fnvlist_add_nvlist(lognv, ZPOOL_HIST_INPUT_NVL,
-				    mnvl);
-			}
-
-			error = vec->zvec_func(name, innvl, outnvl, opts,
-			    version);
-			if (error == 0 && vec->zvec_allow_log &&
-			    spa_open(zc->zc_name, &spa, FTAG) == 0) {
-				if (!nvlist_empty(outnvl)) {
-					fnvlist_add_nvlist(lognv,
-					    ZPOOL_HIST_OUTPUT_NVL, outnvl);
-				}
-				(void) spa_history_log_nvl(spa, lognv);
-				spa_close(spa, FTAG);
-			}
-			fnvlist_free(lognv);
-
-			if (!nvlist_empty(outnvl) &&
-			    zc->zc_nvlist_dst_size != 0) {
-				int smusherror = 0;
-				if (vec->zvec_smush_outnvlist) {
-					smusherror = nvlist_smush(outnvl,
-					    zc->zc_nvlist_dst_size);
-				}
-				if (smusherror == 0)
-					puterror = put_nvlist_xdr(zc, outnvl);
-			}
-
-			if (puterror != 0)
-				error = puterror;
-
-			nvlist_free(outnvl);
-			break;
-
+		if (strcmp(zfs_stable_ioc_vec[i].zvec_name, cmd) != 0) {
+			continue;
 		}
+
+		vec = &zfs_stable_ioc_vec[i];
+		error = zfs_namecheck(name, vec->zvec_namecheck,
+				vec->zvec_pool_check);
+
+		if (error == 0 && !(zc->zc_iflags & FKIOCTL))
+			error = vec->zvec_secpolicy(zc, innvl, opts, CRED());
+
+		if (error)
+			return (error);
+
+		ASSERT(vec->zvec_func);
+		VERIFY0(nvlist_alloc(&outnvl, NV_UNIQUE_NAME, KM_PUSHPAGE));
+
+		/* XXX: Do we want to log the mnvl as the input nvl? */
+		if (vec->zvec_allow_log) {
+			lognv = fnvlist_alloc();
+			fnvlist_add_string(lognv, ZPOOL_HIST_IOCTL, "stable");
+			fnvlist_add_nvlist(lognv, ZPOOL_HIST_INPUT_NVL, mnvl);
+		}
+
+		error = vec->zvec_func(name, innvl, outnvl, opts, version);
+		if (error == 0 &&
+		    vec->zvec_allow_log &&
+		    spa_open(zc->zc_name, &spa, FTAG) == 0) {
+			if (!nvlist_empty(outnvl)) {
+				fnvlist_add_nvlist(lognv, ZPOOL_HIST_OUTPUT_NVL,
+					outnvl);
+			}
+			(void) spa_history_log_nvl(spa, lognv);
+			spa_close(spa, FTAG);
+		}
+		fnvlist_free(lognv);
+
+		if (!nvlist_empty(outnvl) && zc->zc_nvlist_dst_size != 0) {
+			int smusherror = 0;
+			if (vec->zvec_smush_outnvlist) {
+				smusherror = nvlist_smush(outnvl,
+					zc->zc_nvlist_dst_size);
+			}
+			if (smusherror == 0)
+				puterror = put_nvlist_xdr(zc, outnvl);
+		}
+
+		if (puterror != 0)
+			error = puterror;
+
+		nvlist_free(outnvl);
+		break;
+
 	}
 
 out:
