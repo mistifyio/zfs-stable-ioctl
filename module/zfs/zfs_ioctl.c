@@ -6556,7 +6556,7 @@ zfs_ioc_stable(zfs_cmd_t *zc)
 					    zc->zc_nvlist_dst_size);
 				}
 				if (smusherror == 0)
-					puterror = put_nvlist(zc, outnvl);
+					puterror = put_nvlist_xdr(zc, outnvl);
 			}
 
 			if (puterror != 0)
