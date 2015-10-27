@@ -49,7 +49,8 @@ Properties may optionally be set using
 .SH RETURN VALUES
 .sp
 .LP
-Upon successful completion, 0 is returned. Otherwise, an error is returned.
+Upon successful completion, 0 is returned.
+Otherwise, an error is returned.
 .SH ERRORS
 .sp
 .LP
@@ -60,8 +61,7 @@ The \fBlzc_clone()\fR function will fail if:
 \fB\fBEDQUOT\fR\fR
 .ad
 .RS 13n
-Creation of the clone will require storage space in excess of the filesystem
-quota.
+Creation of the clone will require storage space in excess of the filesystem quota.
 .RE
 
 .sp
@@ -81,9 +81,11 @@ A dataset named \fIfsname\fR already exists.
 \fB\fBEINVAL\fR\fR
 .ad
 .RS 13n
-The dataset name \fIfsname\fR is not syntactically correct. This includes situations where bookmarks, snapshots or holds are specified.
+The dataset name \fIfsname\fR is not syntactically correct.
+This includes situations where bookmarks, snapshots or holds are specified.
 .sp
-The snapshot name \fIorigin\fR is not syntactically correct. This includes the case of attempting to clone a non-snapshot.
+The snapshot name \fIorigin\fR is not syntactically correct.
+This includes the case of attempting to clone a non-snapshot.
 .sp
 The nvlist_t \fIprops\fR could not be understood by the kernel as being NULL or a nvlist.
 .RE
