@@ -52,6 +52,7 @@ It shall be of the format:
 
 .I errlist
 shall contain a handle that shall be used to store a pointer to a library allocated nvlist when non-NULL and the operation for at least one hold fails.
+.\" TODO WAT vis holds
 The names of the holds shall be the keys while the values shall contain the error codes and be of type int32.
 Holds that failed to release because they did not exist shall also have an entry added.
 It shall not be touched otherwise.
@@ -62,6 +63,7 @@ It shall not be touched otherwise.
 Upon successful completion, 0 is returned.
 Otherwise, an error is returned.
 .sp
+.\" TODO WAT vis holds
 On error, an error is returned from one of the holds where an error occurred and \fI*errlist\fR is initialized with a pointer to a nvlist with more specific information when \fIerrlist\fR is non-NULL.
 The caller must call \fBnvlist_free\fR(\fI*errlist\fR) when this occurs.
 

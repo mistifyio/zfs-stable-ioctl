@@ -845,7 +845,6 @@ lzc_inherit(const char *fsname, const char *propname, nvlist_t *opts)
  * destroy something that does not exist. The caller must unmount the dataset
  * before calling this. Otherwise, it will fail.
  */
-
 int
 lzc_destroy_one(const char *fsname, nvlist_t *opts)
 {
