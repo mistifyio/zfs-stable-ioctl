@@ -41,7 +41,7 @@ The \fBlzc_snapshot\fR() function creates atomic snapshots of all ZFS datasets a
 
 .I snaps
 shall be a nvlist containing strings that specify the snapshots to create.
-All snapshot smust be inside the same pool.
+All snapshots must be inside the same pool.
 
 .I props
 shall either be NULL or contain a nvlist with properties to set on the snapshot at creation time.
@@ -121,7 +121,7 @@ A property name in \fIprops\fR nvlist exceeds 256 characters.
 .RS 13n
 Pool does not exist.
 .sp
-Loading unitialized pool from cachefile failed because the pool was exported or destroyed.
+Loading uninitialized pool from cachefile failed because the pool was exported or destroyed.
 .sp
 Internal error where uninitialized pool lacks a GUID in its config that was read from the cachefile.
 .sp

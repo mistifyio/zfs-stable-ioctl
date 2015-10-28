@@ -50,7 +50,7 @@ If \fIdefer\fR is set, and a snapshot has user holds or clones, it will be marke
 .sp
 .LP
 Upon successful completion, 0 is returned.
-This means that all snapshots were destroyed (excluding those that did not exist) or were marked for later distruction if \fIdefer\fR is set.
+This means that all snapshots were destroyed (excluding those that did not exist) or were marked for later destruction if \fIdefer\fR is set.
 .sp
 On error, an error is returned from one of the snapshots where an error occurred and \fIerrlist\fR is populated with more specific information if a pointer is provided.
 \fIerrlist\fR shall contain keys with the snapshot names and int32 values of the error codes.
@@ -69,7 +69,7 @@ Snapshot held by a user hold and \fIdefer\fR is not specified.
 .sp
 Snapshot held by a zfs send stream and \fIdefer\fR is not specified.
 .sp
-Snapshot held by an open file hanle or program's present working directory and \fIdefer\fR is not specified.
+Snapshot held by an open file handle or program's present working directory and \fIdefer\fR is not specified.
 .RE
 
 .sp
@@ -89,7 +89,7 @@ This snapshot is the parent of clones and cannot be deleted.
 \fB\fBEINVAL\fR\fR
 .ad
 .RS 13n
-No snaphsots specified in \fIsnaps\fR.
+No snapshots specified in \fIsnaps\fR.
 .sp
 The nvlist \fIsnaps\fR is not a valid nvlist.
 .RE
@@ -111,7 +111,7 @@ Snapshot name specified in \fIsnaps\fR is too long.
 .RS 13n
 Pool does not exist.
 .sp
-Loading unitialized pool from cachefile failed because the pool was exported or destroyed.
+Loading uninitialized pool from cachefile failed because the pool was exported or destroyed.
 .sp
 Internal error where uninitialized pool lacks a GUID in its config that was read from the cachefile.
 .sp

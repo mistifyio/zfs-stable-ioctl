@@ -40,7 +40,7 @@ libzfs_core_init, libzfs_core_fini \- Initialize and deinitialize libzfs_core li
 .LP
 The \fBlibzfs_core_init\fR() function is a singleton constructor for the libzfs_core library.
 It should be called once at program initialization.
-Multiple calls to \fBlibzfs_core_init\fR() are fine provided that they be matched by an equal number of alls to the \fBlibzfs_core_fini\fR() function.
+Multiple calls to \fBlibzfs_core_init\fR() are fine provided that they be matched by an equal number of calls to the \fBlibzfs_core_fini\fR() function.
 
 .SH RETURN VALUES
 .sp
@@ -59,4 +59,4 @@ In this situation, the error code from \fBopen\fR(2) will be returned.
 .SH "SEE ALSO"
 .sp
 .LP
-"\fIlibzfs_core.h\fR(3)", "\fIopen\fR(2)"
+\fIlibzfs_core.h\fR(3), \fIopen\fR(2)
