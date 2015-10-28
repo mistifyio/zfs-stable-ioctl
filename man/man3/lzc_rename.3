@@ -39,7 +39,7 @@ lzc_rename \- Rollback this filesystem or volume to its most recent snapshot.
 .LP
 The \fBlibzfs_rename\fR() function will rename a dataset, volume or snapshot.
 
-For legacy purposes, it will make an attempt to unmount the dataset, volume or snapsot before a rename is done.
+For legacy purposes, it will make an attempt to unmount the dataset, volume or snapshot before a rename is done.
 To ensure atomicity, userland should unmount the dataset, volume or snapshot before calling this.
 
 .I oldname
@@ -65,7 +65,7 @@ It is only used when an error occurs when renaming snapshots recursively.
 Upon successful completion, 0 is returned.
 Otherwise, an error is returned.
 
-If an error occurs on a recursive snapshot rename and \fIerrname\fR is non-NULL, a strdup()-allocated string wll be returned via \fIerrname\fR.
+If an error occurs on a recursive snapshot rename and \fIerrname\fR is non-NULL, a strdup()-allocated string will be returned via \fIerrname\fR.
 The caller must free it with \fBstrfree\fR().
 
 .SH ERRORS
@@ -111,7 +111,7 @@ The new name of a recursively renamed child snapshot would exceed 256 characters
 .RS 13n
 Pool does not exist.
 .sp
-Loading unitialized pool from cachefile failed because the pool was exported or destroyed.
+Loading uninitialized pool from cachefile failed because the pool was exported or destroyed.
 .sp
 Internal error where uninitialized pool lacks a GUID in its config that was read from the cachefile.
 .RE

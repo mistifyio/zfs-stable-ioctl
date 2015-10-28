@@ -61,7 +61,7 @@ NAME                    TYPE                    DESCRIPTION
 At present, the fd field is the only supported output method and therefore, it is mandatory.
 If the name field is a bookmark or snapshot, the recurse field is ignored.
 If all children are desired, recurse should be set to be a boolean type.
-If a recursion limit is desired, recurses hould be a uint64_t.
+If a recursion limit is desired, recurses should be a uint64_t.
 If no type is specified, a default behavior consistent with the zfs list command is provided. Valid children of the type nvlist are:
 .sp
 .in +2
@@ -77,7 +77,7 @@ NAME                    TYPE                    DESCRIPTION
 .in -2
 .sp
 Whenever a boolean type is specified, any type may be passed and be considered boolean.
-However, future extensions may accept alternate types and consequently, backward compatibility is only guarenteed to callers passing a boolean type that contains no value.
+However, future extensions may accept alternate types and consequently, backward compatibility is only guaranteed to callers passing a boolean type that contains no value.
 A boolean that contains B_TRUE or B_FALSE is considered a separate type from a boolean that contains no value.
 Additionally, future enhancements to zfs may create a new type and callers that only wish to handle existing types should specify them explicitly rather than relying on the default behavior.
 .sp
@@ -286,7 +286,7 @@ The string \fIname\fR exceeds 256 characters.
 .RS 13n
 Pool does not exist.
 .sp
-Loading unitialized pool from cachefile failed because the pool was exported or destroyed.
+Loading uninitialized pool from cachefile failed because the pool was exported or destroyed.
 .sp
 Internal error where uninitialized pool lacks a GUID in its config that was read from the cachefile.
 .sp
