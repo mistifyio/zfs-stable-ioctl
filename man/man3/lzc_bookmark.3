@@ -37,7 +37,7 @@ lzc_bookmark \- Creates bookmarks from snapshot
 
 .SH DESCRIPTION
 .LP
-The \fBlibzfs_snapshot\fR() function creates atomic snapshots of all ZFS datasets and/or volumes named in the \fIsnaps\fR nvlist.
+The \fBlzc_bookmark\fR() function creates atomic bookmarks of all ZFS datasets and/or volumes named in the \fIbookmarks\fR nvlist.
 
 .I bookmarks
 shall be a nvlist containing strings whose keys are bookmark names and values are snapshot names to specify which bookmarks to create.

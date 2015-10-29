@@ -39,6 +39,8 @@ lzc_snaprange_space \- Determine how much space is used by a snapshot range.
 .LP
 The \fBlzc_snaprange_space\fR() function calculates how much space in bytes the differences between \fIfirstsnap\fR and \fIlastsnap\fR use in the pool.
 They must be snapshots of the same dataset.
+.sp
+The used space calculated is stored in \fI*usedp\fR.
 
 .SH RETURN VALUES
 .sp
