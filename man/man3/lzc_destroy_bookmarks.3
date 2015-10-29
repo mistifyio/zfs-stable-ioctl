@@ -51,7 +51,7 @@ Upon successful completion, 0 is returned.
 .sp
 On error, an error is returned from one of the bookmarks where an error occurred and \fIerrlist\fR is populated with more specific information if a pointer is provided.
 \fIerrlist\fR shall contain keys with the snapshot names and int32 values of the error codes.
-The caller must call \fBnvlist_free\fR() on \fIerrlist\fR if this occurs.
+The caller must call \fBnvlist_free\fR(\fI*errlist\fR) when this occurs.
 .SH ERRORS
 .sp
 .LP
