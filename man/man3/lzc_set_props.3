@@ -51,7 +51,7 @@ is a nvlist containing additional options to pass to this command.
 .sp
 The \fIprops\fR parameter is an nvlist of property names (with no values) that will be returned for each bookmark.
 The \fIbmarks\fR parameter is a pointer to a nvlist of the bookmarks.
-The caller is responsible for freeing it with \fBnvlist_free\fR().
+The caller is responsible for freeing it with \fBnvlist_free\fR(\fI*bmarks\fR).
 
 The format of the returned nvlist as follows:
 .P

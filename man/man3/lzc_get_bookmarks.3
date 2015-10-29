@@ -41,7 +41,7 @@ lzc_get_bookmarks \- Retrieve bookmarks of a given filesystem
 The \fBlzc_get_bookmarks\fR() function will retrieve the list of bookmarks for the given file system.
 The \fIprops\fR parameter is an nvlist of property names (with no values) that will be returned for each bookmark.
 The \fIbmarks\fR parameter is a pointer to a nvlist of the bookmarks.
-The caller is responsible for freeing it with \fBnvlist_free\fR().
+The caller is responsible for freeing it with \fBnvlist_free\fR(\fI*bmarks\fR).
 
 The format of the returned nvlist as follows:
 .P
