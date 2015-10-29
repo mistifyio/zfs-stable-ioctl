@@ -65,7 +65,7 @@ The \fBlzc_receive()\fR function shall fail if:
 .RS 13n
 The file descriptor was marked non-blocking and the call would block.
 This is from \fBread\fR(2).
-This indicates a userland programming bug because \fIfd\fB should never be set as being non-blocking.
+\fBThis indicates a userland programming bug\fR because \fIfd\fR should never be set as being non-blocking.
 .RE
 
 .sp
@@ -159,7 +159,7 @@ The file descriptor \fIfd\fR belongs to a directory.
 This is from \fBread\fR(2).
 .RE
 
-:sp
+.sp
 .ne 2
 .na
 \fB\fBENAMETOOLONG\fR\fR
@@ -218,7 +218,7 @@ Permission denied by zone security policy.
 \fB\fBETXTBSY\fR\fR
 .ad
 .RS 13n
-The force flag has not been set, but the dataset belonging to \fRsnapname\fI has been modified.
+The force flag has not been set, but the dataset belonging to \fIsnapname\fR has been modified.
 .RE
 
 

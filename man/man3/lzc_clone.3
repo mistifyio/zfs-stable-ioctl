@@ -30,7 +30,7 @@ This manual page is part of the OpenZFS Programmer's Manual.
 .SH SYNOPSIS
 #include <libzfs_core.h>
 
-\fBint\fR \fBlzc_clone\fR(\fBconst char *\fR\fIfsname\fR, \fBconst char *\fR \fIorigin\fR, \fBnvlist_t *\fR\fIprops\fR);
+\fBint\fR \fBlzc_clone\fR(\fBconst char *\fR\fIfsname\fR, \fBconst char *\fR\fIorigin\fR, \fBnvlist_t *\fR\fIprops\fR);
 
 .SH NAME
 lzc_clone \- Creates a clone from a snapshot
@@ -42,9 +42,9 @@ The
 function creates a ZFS dataset or volume named
 .I fsname
 from the snapshot
-.fs origin .
+.I origin\fR.
 Properties may optionally be set using
-.I props .
+.I props\fR.
 
 .SH RETURN VALUES
 .sp
