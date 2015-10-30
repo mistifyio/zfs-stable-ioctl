@@ -7112,10 +7112,28 @@ zfsdev_ioctl(struct file *filp, unsigned cmd, unsigned long arg)
 	zc = kmem_zalloc(sizeof (zfs_cmd_t), KM_SLEEP);
 	printk("MM: a zfs_cmd_t is of size: %lu\n", sizeof(zfs_cmd_t));
 
-	error = ddi_copyin((void *)arg, zc, sizeof (zfs_cmd_t), flag);
-	if (error != 0) {
-		error = SET_ERROR(EFAULT);
-		goto out;
+	if (cmd != ZFS_IOC_LIBZFS_CORE) {
+		error = ddi_copyin((void *)arg, zc, sizeof (zfs_cmd_t), flag);
+		if (error != 0) {
+			error = SET_ERROR(EFAULT);
+			goto out;
+		}
+	} else {
+		zfs_stable_cmd_t *zsc;
+		zsc = kmem_zalloc(sizeof (zfs_stable_cmd_t), KM_SLEEP);
+		error = ddi_copyin((void *)arg, zsc, sizeof (zfs_stable_cmd_t), flag);
+		if (error != 0) {
+			kmem_free(zsc, sizeof (zfs_stable_cmd_t));
+			error = SET_ERROR(EFAULT);
+			goto out;
+		}
+		memcpy(zc->zc_name, zsc->zc_name, sizeof (zc->zc_name));
+		zc->zc_nvlist_src = zsc->zc_nvlist_src;
+		zc->zc_nvlist_src_size = zsc->zc_nvlist_src_size;
+		zc->zc_nvlist_dst = zsc->zc_nvlist_dst;
+		zc->zc_nvlist_dst_size = zsc->zc_nvlist_dst_size;
+		zc->zc_nvlist_dst_filled = zsc->zc_nvlist_dst_filled;
+		kmem_free(zsc, sizeof (zfs_stable_cmd_t));
 	}
 
 	zc->zc_iflags = flag & FKIOCTL;
